@@ -1,0 +1,42 @@
+{% extends'base.html' %}
+{% block content %}
+
+<div class="jumbotron">
+    <p class="lead"><strong>Currently Booked Appointments for {{ current_user.first }} {{ current_user.last }}</strong></p>
+    <hr class = 'my-4'>
+    {% if current_user.is_admin%}
+        {% for user, appt in now_booked  %}
+            {{ user }} booked {{ appt }} <br>
+        {% endfor %}
+    {% else %}
+        {% for appt in now_user %}
+            {{ appt }} <br>
+        {% endfor %}
+    {% endif %}
+    <br><br>
+    <p class="lead"><strong>Past Booked Appointments for {{ current_user.first }} {{ current_user.last }}</strong></p>
+    <hr class = 'my-4'>
+    {% if current_user.is_admin %}
+        {% for user, appt in past_booked %}
+            {{ user }} booked {{ appt }} <br>
+        {% endfor %}
+    {% else %}
+        {% for appt in past_user %}
+            {{ appt }} <br>
+        {% endfor %}
+    {% endif %}
+
+
+
+</div>
+
+
+
+    <div class = 'container'>
+    Available Appointments
+        <hr class = 'my-4'>
+    {% for appt in avail %}
+    {{ appt }} <br>
+    {% endfor %}
+    </div>
+{% endblock %}

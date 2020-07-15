@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class = 'jumbotron'>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="col">
+                {{ form.email(class = 'form-control', placeholder = 'email@somewhere.com') }}
+            </div>
+            <div class="col">
+                {{ form.email_me(class = 'form-control') }}
+            </div>
+        </div>
+
+        <hr class = 'my-4'>
+        {{ form.submit(class = 'btn btn-info') }}
+    </form>
+</div>
+{% endblock %}

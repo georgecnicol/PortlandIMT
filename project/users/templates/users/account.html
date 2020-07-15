@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class = 'jumbotron'>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+        <h5>{{ user.first }} {{ user.last }}</h5><br>
+        {{ user.email }}<strong>
+        {% if user.email_me == 1 %}
+        will
+        {% else %}
+        will not
+        {% endif %}</strong>
+        receive appointment reminders via email.<br>
+        ({{ user.phone[0:3] }}) {{ user.phone[3:6] }} - {{ user.phone[6:] }}<strong>
+    {% if user.text_me == 1 %}
+    will
+    {% else %}
+    will not
+    {% endif %}</strong>
+    receive appointment reminders via text.<br>
+        <hr class = 'my-4'>
+        <a role="button" class="btn btn-info" href = "{{url_for('users.update_email')}}">Update Email</a>
+        <a role="button" class="btn btn-info" href = "{{url_for('users.update_phone')}}">Update Phone</a>
+        <a role="button" class="btn btn-info" href = "{{url_for('users.update_password')}}">Update Password</a>
+    </div>
+{% endblock %}

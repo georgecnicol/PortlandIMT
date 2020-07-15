@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class = 'jumbotron'>
+    <div class = 'container'>
+      {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{ message }}</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  <br>
+    <form method = 'POST'>
+        {{ form.hidden_tag() }}
+        <div class="row">
+          <div class="col">
+              {{ form.first(class = 'form-control', placeholder = 'First Name') }}
+          </div>
+         <div class="col">
+             {{ form.last(class = 'form-control', placeholder = 'Last Name') }}
+         </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                {{ form.email(class = 'form-control', placeholder = 'email@somewhere.com') }}
+            </div>
+            <div class="col">
+                {{ form.email_me(class = 'form-control') }}
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group col-md-2">
+                {{ form.area(class = 'form-control', placeholder = '503') }}
+            </div>
+            <div class="form-group col-md-2">
+                {{ form.exchange(class = 'form-control', placeholder = '555') }}
+            </div>
+            <div class="form-group col-md-2">
+                {{ form.subscriber(class = 'form-control', placeholder = '1212') }}
+            </div>
+            <div class="col">
+                {{ form.text_me(class = 'form-control') }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form.password(class = 'form-control', placeholder='super secret password') }}
+            </div>
+            <div class="col">
+                {{ form.pass_confirm(class = 'form-control', placeholder='repeat super secret password here') }}
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <small id="emailHelp" class="form-text text-muted">We don't share your email. We don't share your phone number either.<br> You can change your email and text choices under account settings.</small>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <hr class = 'my-4'>
+          {{ form.submit(class = 'btn btn-info') }}
+      </form>
+    </div>
+  </div>
+
+
+
+
+{%  endblock %}

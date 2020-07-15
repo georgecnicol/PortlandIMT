@@ -1,0 +1,30 @@
+{% extends'base.html' %}
+{% block content %}
+    <div class = 'jumbotron'>
+    <h2>Users</h2>
+    {% for user in users %}
+    {{ user }} <br>
+    {% endfor %}
+            <hr class = 'my-4'>
+    <h2>Admins</h2>
+    {% for admin in admins %}
+    {{ admin }} <br>
+    {% endfor %}
+    </div>
+
+    <div class = 'container'>
+    Put in the email of the person to either give or remove admin powers.<br>
+    <form method = 'POST'>
+    {{ form.hidden_tag() }}
+    <div class = 'form-group'>
+        {{ form.email(placeholder = current_user.email, class = 'col-md-6 form-control') }}
+    </div>
+    <div class = 'form-group'>
+        {{ form.add_or_remove.label() }} {{ form.add_or_remove() }}
+    </div>
+
+    {{ form.submit(class = 'btn btn-info') }}
+    </form>
+    </div>
+
+{% endblock %}

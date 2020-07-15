@@ -1,0 +1,55 @@
+{% extends'base.html' %}
+{% block content %}
+    <div class='jumbotron'>
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            {% if 'days' not in message %}
+            <a href="{{ url_for('appointments.list_appointments') }}" class="alert-link">Show Appointments</a>.
+            {% endif %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+
+    <form method = 'POST'>
+        {{ form.hidden_tag() }}
+        <div class = 'form-group'>
+            {{ form.create.label() }} {{ form.create(class = "col-md-4 form-control") }}
+        </div>
+        <div class = 'form-group'>
+            {{ form.YYYY.label() }} {{ form.YYYY(class = "col-md-4 form-control") }}
+        </div>
+        <div class = 'form-group'>
+            {{ form.MM.label() }} {{ form.MM(class = "col-md-4 form-control") }}
+        </div>
+        <div class = 'form-group'>
+            {{ form.DD.label() }} {{ form.DD(class = "col-md-4 form-control") }}
+        </div>
+        <div class = 'form-group'>
+        {{ form.type.label() }} {{ form.type(class = "col-md-4 form-control") }}
+        </div>
+        <div class = 'form-group'>
+            {{ form.hh.label() }} {{ form.hh(class = "col-md-4 form-control") }}
+            <small class="form-text text-muted">Time is only used when selecting a single appointment.</small>
+        </div>
+        <div class = 'form-group'>
+            {{ form.mm.label() }} {{ form.mm(class = "col-md-4 form-control") }}
+            <small class="form-text text-muted">Time is only used when selecting a single appointment.</small>
+
+        </div>
+        <div class = 'form-group'>
+            {{ form.length.label() }} {{ form.length(class = "col-md-4 form-control") }}
+            <small class="form-text text-muted">Time is only used when selecting a single appointment.</small>
+        </div>
+        <div class = 'form-group'>
+        {{ form.message.label() }} {{ form.message(class = "col-md-4 form-control") }}
+        <small class="form-text text-muted">Message is only used when selecting a single appointment.</small>
+        </div>
+
+    <hr class="my-4">
+        {{ form.submit(class = "btn btn-info") }}
+    </form>
+    </div>
+{% endblock %}

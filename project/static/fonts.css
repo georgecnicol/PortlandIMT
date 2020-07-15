@@ -1,0 +1,54 @@
+.navbar-brand {
+    font-family: 'Rock Salt', cursive;
+}
+
+.nav-link {
+    font-family: 'Sriracha', cursive;
+}
+
+#base-dropdown {
+    font-family: 'Sriracha', cursive;
+}
+
+.error-message {
+    font-family: 'Caveat', cursive;
+}
+
+#beaches {
+    font-family: 'Rock Salt', cursive;
+}
+
+#booked {
+    color: white;
+    background-color: forestgreen;
+}
+
+#avail {
+    color: white;
+    background: royalblue;
+}
+
+#dropdown-text {
+    color: white;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#cal-button {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table td, table td * {
+    vertical-align: top;
+    text-align: left;
+}
+
+table th {
+    text-align: center;
+}

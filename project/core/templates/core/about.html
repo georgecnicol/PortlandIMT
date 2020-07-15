@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron">
+  <h4 class="display-4" id="beaches">Beaches ...</h4>
+  <p class="lead">finely granulated sand with clear blue water.</p>
+  <hr class="my-4">
+  <p>
+      We love the beach and hope you do too.
+  </p>
+</div>
+<div class="container">
+    <div class="card-deck">
+  <div class="card">
+    <img src="../static/George.JPG" class="card-img-top" alt="picture of George">
+    <div class="card-body">
+      <h5 class="card-title">George Nicol</h5>
+        <p class="card-text">Does all the things ... Python, Flask, SQL, CSS, HTML, Bootstrap.</p>
+
+        <p class="card-text">
+            <small class="text-muted"> georgecnicol at
+            <img src="../static/gmail.png" loading="lazy" height="11" width = '25'> dot com
+              <a href="https://www.linkedin.com/in/georgecnicol">
+            <img src="../static/linkedin.ico" loading="lazy" width="11" height="11"></a>
+            </small>
+        </p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="../static/jack.png" class="card-img-top" alt="dawg">
+    <div class="card-body">
+      <h5 class="card-title">Jack</h5>
+      <p class="card-text">Responsible for barking when the mail comes or when people walk down the street.</p>
+      <p class="card-text"><small class="text-muted">Will also go to the beach anytime.</small></p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="../static/tess.JPG" class="card-img-top" alt="girl jumping off boat">
+    <div class="card-body">
+      <h5 class="card-title">Tess</h5>
+      <p class="card-text">Generates inspiration for many things and is part mermaid.</p>
+      <p class="card-text"><small class="text-muted">Has to be dragged away from the beach.</small></p>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
