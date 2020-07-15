@@ -1,3 +1,11 @@
+Work in progress:
+Admin can CRUD appointments.
+Users can schedule appointments and manage their accounts with OAuth login.
+Automated email/ text reminders of appointments.
+Basic company information
+Uses Bootstrap, flask
+
+
 # TODO - PRODUCTION
 # --------------------------------------------------------------------------
 # core/views
