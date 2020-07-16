@@ -1,5 +1,6 @@
 Work in progress:
 Admin can CRUD appointments.
+Users can CRU themselves.
 Users can schedule appointments and manage their accounts with OAuth login.
 Automated email/ text reminders of appointments.
 Basic company information
