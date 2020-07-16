@@ -3,12 +3,16 @@
 
 from flask import render_template, redirect, url_for, Blueprint, flash
 from flask_login import current_user, logout_user, login_required
-from project import db
+from project import db, login_manager
 from project.models import User
 from project.users.forms import UpdateEmailForm
 from project.users.forms import AlterAdminForm, UpdatePasswordForm, UpdatePhoneForm
 
 users = Blueprint('users', __name__, template_folder = 'templates/users') # register this in init
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 @users.route('/update-email', methods = ['GET', 'POST'])
@@ -23,7 +27,7 @@ def update_email():
             db.session.commit()
             logout_user()
             flash(f'Please log back in with your updated email address {form.email.data}')
-            return redirect(url_for('users.login'))
+            return redirect(url_for('core.login'))
         else:
             flash(f'{form.email.data} is already in use.')
     else:
@@ -44,7 +48,7 @@ def update_password():
             db.session.commit()
             logout_user()
             flash(f'Please login with your new password.')
-            return redirect(url_for('users.login'))
+            return redirect(url_for('core.login'))
         else:
             form.old_password.data = ''
             form.new_password.data = ''

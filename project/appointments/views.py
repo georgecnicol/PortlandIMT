@@ -1,5 +1,5 @@
 from project import db
-from flask import render_template, redirect, url_for, Blueprint, flash
+from flask import render_template, redirect, url_for, Blueprint, flash, abort
 from flask_login import current_user, login_required
 from project.models import Appointment
 from project.appointments.forms import CreateAppt, SubmitForm
@@ -31,6 +31,8 @@ def list_appointments():
 @appointments.route('/create', methods = ['GET', 'POST'])
 @login_required
 def create():
+    if not current_user.is_admin:
+        abort(403)
     form = CreateAppt()
     if form.validate_on_submit():
         try:

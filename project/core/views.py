@@ -4,7 +4,7 @@
 # TODO currently it says: http://127.0.0.1:5000/login/google/authorized
 
 from flask import render_template, redirect, Blueprint, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from project.users.forms import RegisterForm, LoginForm
 from flask_dance.contrib.google import make_google_blueprint, google
 from project.models import User
@@ -24,13 +24,63 @@ g_blueprint = make_google_blueprint(
     client_id=client_id,
     client_secret=client_secret,
     # reprompt_consent=True,
-    offline=True,
+    offline=True, # TODO - change to False for production
     scope=["profile", "email"]
 )
+
+# a website user who attempts to login using google
+# and has a valid google auth, will leave a token of that auth
+# we need to delete that token when they logout or if they aren't actually registered
+def de_auth_google():
+    try:
+        token = g_blueprint.token["access_token"]
+        resp = google.post(
+            "https://accounts.google.com/o/oauth2/revoke",
+            params = {"token": token},
+            headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        )
+        if resp.ok:
+            del g_blueprint.token
+    except TypeError:
+        pass # no token for manual login people
+
+# trying to match their google auth gmail to a registered user's email
+# if we can, we log them in. Otherwise we need to get rid of their token
+# which is the edge case, where they try to sign in using google, but haven't registered
+# for the try/except, we don't actually care if they didn't have a token, we were just
+# checking if they did and then cleaning it up if they did.
+def match_gmail():
+    try:
+        resp = google.get("/oauth2/v2/userinfo")
+        gmail = resp.json()["email"]
+        user = User.query.filter_by(email = gmail).first()
+        if user is not None:
+            login_user(user)
+        else:
+            de_auth_google()
+    except KeyError:
+        pass
+
+# log in with google
+# this page wants to end up because of flask dance as:
+# https://....:5000/login/google
+# since there is already a blueprint directing it to /login
+# the route.('/login/google') take it to /login/login/google
+@core.route('/google')
+def oauth_login():
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+
+    # otherwise:
+    # see if we get a valid response from google about their gmail
+    # and if that gmail exists in our db, they get logged in
+    # otherwise they just go back to index as an outside viewer
+    return redirect(url_for('core.index'))
 
 
 @core.route('/')
 def index():
+    match_gmail()
     return render_template('index.html')
 
 
@@ -39,6 +89,7 @@ def about():
     return render_template('about.html')
 
 
+# login using the email/ password method
 @core.route('/login', methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -69,7 +120,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash(f'Welcome {new_user.first}, you are now registered. Please login to continue.')
-            return redirect(url_for('users.login'))
+            return redirect(url_for('core.login'))
         else:
             flash(f'Sorry, the email {form.email.data} has already been registered. '
                   f'Perhaps try to login with the \'I forgot my password\' option')
@@ -81,9 +132,13 @@ def register():
 
 
 @core.route('/logout')
-@login_required
+# login specifcally not required because this can be called to erase a google auth
+# token for a person who is validated by google, but doesn't have an account
+# in which case we need to clear the token
 def logout():
+    de_auth_google()
     logout_user()
+
     return redirect(url_for('core.index'))
 
 

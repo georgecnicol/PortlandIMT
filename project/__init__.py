@@ -27,7 +27,8 @@ os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = '1'
 # login configs #############
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'users.login'
+# send them here if they try to access a page that requires login
+login_manager.login_view = 'core.login'
 
 # register blueprints #############
 from project.errors.handlers import errors
@@ -36,7 +37,7 @@ from project.users.views import users
 from project.appointments.views import appointments
 app.register_blueprint(appointments, url_prefix = '/appointments')
 app.register_blueprint(core)            # no prefix because this is views off the core
-app.register_blueprint(g_blueprint)     # no prefix because this is also views off the core
+app.register_blueprint(g_blueprint, url_prefix = '/login')
 app.register_blueprint(errors, url_prefix = '/errors')
 app.register_blueprint(users, url_prefix = '/users')
 

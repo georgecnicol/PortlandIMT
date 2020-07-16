@@ -62,12 +62,12 @@
               </li>
           {% else %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              Login/Register
             </a>
             <div class="dropdown-menu" id="base-dropdown" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" id="base-dropdown" href="{{ url_for('core.login') }}">login with password</a>
-              <a class="dropdown-item" id="base-dropdown" href="#">login with google</a>
+              <a class="dropdown-item" id="base-dropdown" href="{{ url_for('core.oauth_login') }}">login with google</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" id="base-dropdown" href="{{ url_for('core.register') }}">register</a>
             </div>
