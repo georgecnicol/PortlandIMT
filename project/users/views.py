@@ -1,7 +1,7 @@
 # login with gmail
 # logout - partially done ... check when google logout if additional
 
-from flask import render_template, redirect, url_for, Blueprint, flash
+from flask import render_template, redirect, url_for, Blueprint, flash, abort
 from flask_login import current_user, logout_user, login_required
 from project import db, login_manager
 from project.models import User
@@ -87,7 +87,7 @@ def show():
 
         return render_template('show-users.html', form = form, admins = admins, users = users)
     else:
-        return redirect(url_for('core.index'))
+        abort(403)
 
 
 @users.route('/account')

@@ -132,9 +132,7 @@ def register():
 
 
 @core.route('/logout')
-# login specifcally not required because this can be called to erase a google auth
-# token for a person who is validated by google, but doesn't have an account
-# in which case we need to clear the token
+@login_required
 def logout():
     de_auth_google()
     logout_user()

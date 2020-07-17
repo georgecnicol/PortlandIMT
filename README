@@ -1,4 +1,4 @@
-Work in progress:
+Work in progress, but currently:
 Admin can CRUD appointments.
 Users can CRU themselves.
 Users can schedule appointments and manage their accounts with OAuth login.
@@ -12,9 +12,9 @@ Uses Bootstrap, flask
 # core/views
 # TODO change the the URL in the OAuth authorized URI from localhost to deployment URL
 # TODO currently it says: http://127.0.0.1:5000/login/google/authorized
-# TODO - some kind of captcha and key for registering
 # TODO - implement https://pypi.org/project/captcha/
 # TODO - change to False for production - (line 27ish) offline=True,
+
 
 # gmail_send
 # TODO -  message["To"] = receiver_email has to be changed in production: receiver_email -> person.email
@@ -23,6 +23,8 @@ Uses Bootstrap, flask
 # # TODO - can be removed in production
 
 
+
 # TODO in no particular order for improvements
 # --------------------------------------------------------------------------
-#
+# core/views
+# TODO - some kind of captcha and key for registering
