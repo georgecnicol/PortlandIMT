@@ -4,13 +4,11 @@ from flask_login import UserMixin
 import datetime as dt
 
 
-# There are three kinds of appointments:
+# There are two kinds of appointments:
 # available - an appointment held by the MC User (Master Calendar) that is available to HU (Human User)
 # booked - an appointment that is held by a Human User
-# closed - an appointment that is neither booked, nor available (eg. a time slot on Christmas Day)
 available = 'available'
 booked = 'booked'
-closed = 'closed'
 paid = 'paid'
 due = 'due'
 

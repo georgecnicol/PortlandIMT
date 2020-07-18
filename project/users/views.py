@@ -3,7 +3,7 @@
 
 from flask import render_template, redirect, url_for, Blueprint, flash, abort
 from flask_login import current_user, logout_user, login_required
-from project import db, login_manager
+from project import db
 from project.models import User
 from project.users.forms import UpdateEmailForm
 from project.users.forms import AlterAdminForm, UpdatePasswordForm, UpdatePhoneForm
