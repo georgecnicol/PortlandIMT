@@ -41,3 +41,10 @@ class CreateAppt(SubmitForm):
 
     message = wtforms.StringField('Optional Short Message Displayed at Time of Booking',
                                   validators = [wtforms.validators.Optional()])
+
+
+class ChangePayment(SubmitForm):
+    payment_status = wtforms.SelectField('Payment Status',
+                                         choices = [('paid', 'mark as PAID'),
+                                                    ('payment due', 'mark as DUE')])
+

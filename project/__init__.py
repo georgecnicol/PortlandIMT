@@ -5,9 +5,18 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from flask_login import LoginManager
 
+# TODO - consider making a single config file
+
+with open('/Users/admin/website/captcha.txt', 'r') as fh:
+    captcha = fh.read().split()
+with open('/Users/admin/website/csrf.txt', 'r') as fh:
+    secret = fh.read().split()
+
 app = Flask(__name__)
-with open('/Users/admin/website/secret.txt', 'r') as fh:
-    app.config['SECRET_KEY'] = fh.read().split()[0]
+app.config['RECAPTCHA_PUBLIC_KEY'] = captcha[0]
+app.config['RECAPTCHA_PRIVATE_KEY'] = captcha[1]
+app.config['SECRET_KEY'] = secret[0]
+app.config['RECAPTCHA_USE_SSL'] = False
 
 ###### DATABASE SETUP ############
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -15,7 +24,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data
 app.config['RENDER_AS_BATCH'] = True
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-# db.create_all()
+db.create_all()
 
 
 # OATH SETUP #############

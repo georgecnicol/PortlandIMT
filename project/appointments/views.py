@@ -1,8 +1,8 @@
 from project import db
-from flask import render_template, redirect, url_for, Blueprint, flash, abort
+from flask import render_template, redirect, url_for, Blueprint, flash, abort, request
 from flask_login import current_user, login_required
 from project.models import Appointment
-from project.appointments.forms import CreateAppt, SubmitForm
+from project.appointments.forms import CreateAppt, SubmitForm, ChangePayment
 import project.appointments.apt_creator as creator
 import project.appointments.calendar as cal
 from datetime import datetime, timedelta
@@ -24,6 +24,19 @@ def list_appointments():
 
     return render_template('list-appointments.html', now_booked = now_booked, past_booked = past_booked,
                            avail = avail, now_user = now_user, past_user = past_user)
+
+
+@appointments.route('/payment/<dt_str>')
+@login_required
+def list_appointments_stuff(dt_str):
+    if current_user.is_admin:
+        appt = Appointment.query.filter_by(start_time = creator.make_dt(dt_str)).first()
+        print(appt.payment)
+        appt.toggle_payment()
+        print(appt.payment)
+        db.session.commit()
+
+    return redirect(url_for('appointments.list_appointments'))
 
 
 # create an appointment. can be a specific appointment or a set of appointments

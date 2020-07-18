@@ -10,9 +10,6 @@ from project.users.forms import AlterAdminForm, UpdatePasswordForm, UpdatePhoneF
 
 users = Blueprint('users', __name__, template_folder = 'templates/users') # register this in init
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
 
 
 @users.route('/update-email', methods = ['GET', 'POST'])

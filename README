@@ -12,7 +12,6 @@ Uses Bootstrap, flask
 # core/views
 # TODO change the the URL in the OAuth authorized URI from localhost to deployment URL
 # TODO currently it says: http://127.0.0.1:5000/login/google/authorized
-# TODO - implement https://pypi.org/project/captcha/
 # TODO - change to False for production - (line 27ish) offline=True,
 
 
@@ -26,5 +25,5 @@ Uses Bootstrap, flask
 
 # TODO in no particular order for improvements
 # --------------------------------------------------------------------------
-# core/views
-# TODO - some kind of captcha and key for registering
+# TODO - create a means by which an appointment can be updated as paid/not paid
+# possibly on list appointment view? Only admin can edit...

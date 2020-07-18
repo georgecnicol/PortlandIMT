@@ -11,6 +11,8 @@ import datetime as dt
 available = 'available'
 booked = 'booked'
 closed = 'closed'
+paid = 'paid'
+due = 'due'
 
 
 # compute for recurring appointments
@@ -83,7 +85,8 @@ class Appointment(db.Model):
     length = db.Column(db.Integer, index = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', back_populates = 'appointment')
-    message = db.Column(db.String())
+    message = db.Column(db.String()) # special message from admin
+    payment = db.Column(db.String()) # paid/ due
 
     # should be available only to admin or as part of admin suite
     def get_user(self):
@@ -96,6 +99,7 @@ class Appointment(db.Model):
         self.length = length
         self.status = available
         self.message = message
+        self.payment = due
 
     # need to make time readable for clients
     def __repr__(self):
@@ -103,6 +107,14 @@ class Appointment(db.Model):
 
     def show_time(self):
         return f'{self.start_time.strftime("%I:%M %p")} for {self.length} minutes'
+
+    def toggle_payment(self):
+        if self.payment == 'paid':
+            self.payment = 'due'
+        else:
+            self.payment = 'paid'
+
+
 
     # put datetime into format matching calendar regex search so we can match an object to its calendar area
     # eg: wed">24<

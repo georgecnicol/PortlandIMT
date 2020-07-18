@@ -1,6 +1,6 @@
 # users/forms
 import wtforms
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from project.models import User
 from flask_login import current_user
 
@@ -34,6 +34,7 @@ class AlterAdminForm(BasicEmail):
 
 class LoginForm(BasicEmail):
     password = wtforms.PasswordField('Password', validators = [wtforms.validators.InputRequired()])
+    recaptcha = RecaptchaField()
 
 
 class RegisterForm(LoginForm):
@@ -62,8 +63,9 @@ class RegisterForm(LoginForm):
     text_me = wtforms.SelectField('Text me', coerce = int,
                                   choices = [(1, 'Please send appointment reminder text'),
                                              (0, 'Do not send appointment reminder text')])
-    #    raise wtforms.ValidationError(f'{self.email.data} has already been registered.')
-    # make this a flash error instead
+
+    token = wtforms.StringField('',
+                                validators = [wtforms.validators.InputRequired()])
 
 
 class UpdatePhoneForm(SubmitForm):
@@ -85,8 +87,6 @@ class UpdatePhoneForm(SubmitForm):
                                              (0, 'Do not send appointment reminder texts')])
 
 
-# inherit from Register so that we can capture the check email function
-# don't really need much else from it other than the submit button
 class UpdatePasswordForm(SubmitForm):
     old_password = wtforms.PasswordField('Old Password', validators = [wtforms.validators.InputRequired()])
     new_password = wtforms.PasswordField('New Password', validators = [wtforms.validators.InputRequired()])

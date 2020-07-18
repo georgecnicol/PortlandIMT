@@ -24,6 +24,14 @@ type_c = [(offset_start, 120), ((offset_120 + offset_lunch), 90), (offset_90, 90
 day_type = {'type_a': type_a, 'type_b': type_b, 'type_c': type_c}
 
 
+#
+def update_payment(dt_obj, payment):
+    appt = Appointment.query.filter_by(start_time = dt_obj).first()
+    if appt is not None:
+        appt.payment = payment
+        db.session.commit()
+
+
 # length of appointment in minutes
 def create_single(dt_obj, length, create, message = ''):
     if create:
@@ -82,9 +90,9 @@ def translator_for(month_year):
     return date, dt_obj, dt_obj < cancel_time_limit
 
 
-# returns zipped user and ALL booked appointment list (current or past appts)
-# only admins should use this
-# or None
+# returns zipped user and ALL booked appointment list (current or past appts) or None
+# and the users who have those appointments
+# for admin consumption only
 def admin_list_booked(dt_obj):
     current_users = []
     past_users = []
@@ -105,6 +113,9 @@ def admin_list_booked(dt_obj):
     return zip(current_users, current), zip(past_users, past)
 
 
+# return a tuple consiting of two lists of appointments associated with a user
+# one list is for appointments that have yet to occur, the other for appointments
+# that have already occurred
 def list_appts(dt_obj, user_id):
     current = db.session.query(Appointment).filter(
         and_(Appointment.user_id == user_id, Appointment.status == 'booked',
@@ -116,12 +127,15 @@ def list_appts(dt_obj, user_id):
     return current, past
 
 
+# return a list appointments that have a status of available; 25 maximum
 def list_available(dt_obj):
     avail = Appointment.query.filter_by(status = 'available').filter(
         Appointment.start_time >= dt_obj).order_by(Appointment.start_time).limit(25)
     return avail
 
 
+# get a list of booked appointments that are
+# FROM the time passed in TO a time 24 hours ahead of that
 def get_one_day_of_booked(dt_obj):
     booked = db.session.query(Appointment).filter(and_(
         Appointment.status == 'booked',
@@ -131,15 +145,18 @@ def get_one_day_of_booked(dt_obj):
     return booked
 
 
+# get the users associated with the appointments passed in - which are presumably 'booked'
 def get_users(list_of_appointments):
     users = []
     for appt in list_of_appointments:
         users.append(User.query.filter_by(id = appt.user_id).first())
 
-    # users = [(user.first, user.phone, user.text_me, user.email, user.email_me) for user in users]
     return users
 
 
+# we want to make a list of appointments, for which to send out reminders
+# that list consists of all booked appointments that start between
+# 24 and 48 hours from when the list is created.
 def make_reminder_list():
     # figure out the day and when to look for appointments
     today = datetime.today()
@@ -149,4 +166,10 @@ def make_reminder_list():
 
     return zip(users, booked)
 
+
+# the toggle button in list, within appointments view, passes a datetime string
+# to the href view it calls. We need that string converted back to a dt object
+# so we can use it to access the associated appointment in the database
+def make_dt(dt_string):
+    return datetime.strptime(dt_string, '%Y-%m-%d %H:%M:%S')
 

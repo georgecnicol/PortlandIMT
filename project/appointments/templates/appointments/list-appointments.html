@@ -5,32 +5,68 @@
     <p class="lead"><strong>Currently Booked Appointments for {{ current_user.first }} {{ current_user.last }}</strong></p>
     <hr class = 'my-4'>
     {% if current_user.is_admin%}
+        <table id="payment_table" cellpadding="10">
         {% for user, appt in now_booked  %}
-            {{ user }} booked {{ appt }} <br>
+            <tr><td>{{ user.first }} {{ user.last }}</td>
+                <td>{{ appt }}</td>
+                <td>
+                    {% if appt.payment == 'due' %}
+                        <em>{{ appt.payment }}</em>
+                    {% else %}
+                        {{ appt.payment }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-info btn-sm" href="payment/{{ appt.start_time }}" role="button">toggle</a>
+                    {% set foo = appt.start_time %}
+                </td></tr>
         {% endfor %}
+        </table>
     {% else %}
         {% for appt in now_user %}
-            {{ appt }} <br>
+            {{ appt }} Status:
+            {% if appt.payment == 'payment due' %}
+                <em>{{ appt.payment }}</em>.
+            {% else %}
+                {{ appt.payment }}.
+            {% endif %}
+            <br>
         {% endfor %}
     {% endif %}
     <br><br>
     <p class="lead"><strong>Past Booked Appointments for {{ current_user.first }} {{ current_user.last }}</strong></p>
     <hr class = 'my-4'>
     {% if current_user.is_admin %}
+        <table id="payment_table" cellpadding="10">
         {% for user, appt in past_booked %}
-            {{ user }} booked {{ appt }} <br>
+            <tr><td>{{ user.first }} {{ user.last }}</td>
+                <td>{{ appt }}</td>
+                <td>
+                    {% if appt.payment == 'due' %}
+                        <em>{{ appt.payment }}</em>
+                    {% else %}
+                        {{ appt.payment }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-info btn-sm" href="payment/{{ appt.start_time }}" role="button">toggle</a>
+                    {% set foo = appt.start_time %}
+                </td></tr>
         {% endfor %}
+        </table>
     {% else %}
         {% for appt in past_user %}
-            {{ appt }} <br>
+            {{ appt }} Status:
+            {% if appt.payment == 'payment due' %}
+                <em>{{ appt.payment }}</em>.
+            {% else %}
+                {{ appt.payment }}.
+            {% endif %}
+            <br>
         {% endfor %}
     {% endif %}
 
-
-
 </div>
-
-
 
     <div class = 'container'>
     Available Appointments

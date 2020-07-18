@@ -58,7 +58,15 @@
         <br>
         <div class="row">
             <div class="col">
+                {{ form.token(class = 'form-control', placeholder='registration token') }}
+            </div>
+            <div class="col">
                 <small id="emailHelp" class="form-text text-muted">We don't share your email. We don't share your phone number either.<br> You can change your email and text choices under account settings.</small>
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col">
+                {{ form.recaptcha }}
             </div>
             <div class="col">
             </div>
