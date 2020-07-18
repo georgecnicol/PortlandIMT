@@ -1,8 +1,8 @@
 from project import db
-from flask import render_template, redirect, url_for, Blueprint, flash, abort, request
+from flask import render_template, redirect, url_for, Blueprint, flash, abort
 from flask_login import current_user, login_required
 from project.models import Appointment
-from project.appointments.forms import CreateAppt, SubmitForm, ChangePayment
+from project.appointments.forms import CreateAppt, SubmitForm
 import project.appointments.apt_creator as creator
 import project.appointments.calendar as cal
 from datetime import datetime, timedelta
