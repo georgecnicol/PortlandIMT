@@ -25,5 +25,3 @@ Uses Bootstrap, flask
 
 # TODO in no particular order for improvements
 # --------------------------------------------------------------------------
-# TODO - create a means by which an appointment can be updated as paid/not paid
-# possibly on list appointment view? Only admin can edit...

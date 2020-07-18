@@ -89,9 +89,12 @@ def view_sometime(month_year):
                 appt.status = 'booked'
                 appt.user_id = current_user.id
                 flash(f'You booked {appt}')
-            else:
-                appt.status = 'available'
-                flash(f'You cancelled {appt}')
+            else: # ensure that person unbooking appt owns the appt or is admin
+                if appt.user_id == current_user.id or current_user.is_admin:
+                    appt.status = 'available'
+                    flash(f'You cancelled {appt}')
+                else:
+                    flash(f'You have not booked that appointment, so you cannot un-book it')
             db.session.commit()
 
         return redirect(url_for('appointments.calendar'))
