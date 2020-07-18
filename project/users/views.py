@@ -11,7 +11,6 @@ from project.users.forms import AlterAdminForm, UpdatePasswordForm, UpdatePhoneF
 users = Blueprint('users', __name__, template_folder = 'templates/users') # register this in init
 
 
-
 @users.route('/update-email', methods = ['GET', 'POST'])
 @login_required
 def update_email():
