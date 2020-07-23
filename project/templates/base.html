@@ -41,7 +41,7 @@
       <!-- login dependent presentation -->
           {% if current_user.is_authenticated %}
               <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('appointments.list_appointments')}}">List My Appointments</a>
+                  <a class="nav-link" href="{{ url_for('appointments.list_appointments')}}">My Appointments</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('appointments.calendar')}}">Calendar</a>
