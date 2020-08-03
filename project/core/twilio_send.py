@@ -9,7 +9,7 @@ from project.appointments.apt_creator import make_reminder_list
 
 def twilio_contact():
     additional_text = 'This message is automated, please do not reply. Visit https://www.example.com or call xxx-xxx-xxxx. Thanks and see you then!'
-    with open('/Users/admin/website/twilio.txt', 'r') as fh:
+    with open('/home/ec2-user/website/twilio.txt', 'r') as fh:
         details = fh.read().split()
     account_sid = details[0]
     auth_token = details[1]

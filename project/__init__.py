@@ -7,9 +7,9 @@ from flask_login import LoginManager
 
 # TODO - consider making a single config file
 
-with open('/Users/admin/website/captcha.txt', 'r') as fh:
+with open('/home/ec2-user/website/captcha.txt', 'r') as fh:
     captcha = fh.read().split()
-with open('/Users/admin/website/csrf.txt', 'r') as fh:
+with open('/home/ec2-user/website/csrf.txt', 'r') as fh:
     secret = fh.read().split()
 
 app = Flask(__name__)

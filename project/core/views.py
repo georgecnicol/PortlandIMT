@@ -12,13 +12,12 @@ from project.models import User
 from project import db
 
 
-# TODO make env variables on production?
 core = Blueprint('core', __name__, template_folder = 'templates/core')
 
-with open('/Users/admin/website/google_secret.txt') as fh:
+with open('/home/ec2-user/website/google_secret.txt') as fh:
     details = fh.read().split()
 
-with open('/Users/admin/website/reg_token.txt') as fh:
+with open('/home/ec2-user/website/reg_token.txt') as fh:
     reg_token = fh.read().strip()
 
 client_id = details[0]
@@ -29,7 +28,7 @@ g_blueprint = make_google_blueprint(
     client_id=client_id,
     client_secret=client_secret,
     # reprompt_consent=True,
-    offline=True, # TODO - change to False for production
+    offline=False, # TODO - change to False for production
     scope=["profile", "email"]
 )
 
@@ -111,8 +110,6 @@ def login():
     return render_template('login.html', form = form)
 
 
-# TODO - some kind of captcha and key for registering
-# TODO - implement https://pypi.org/project/captcha/
 @core.route('/register', methods = ['GET', 'POST'])
 def register():
     form = RegisterForm()

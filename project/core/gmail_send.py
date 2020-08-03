@@ -9,7 +9,7 @@ from project.appointments.apt_creator import make_reminder_list
 def send_mail():
     # login setup
     # TODO - change to env variable in prod?
-    with open('/Users/admin/website/gmail.txt', 'r') as fh:
+    with open('/home/ec2-user/website/gmail.txt', 'r') as fh:
         details = fh.read().split()
     login_email = details[0]
     secret = details[1]
