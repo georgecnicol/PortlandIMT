@@ -1,19 +1,19 @@
 # Download the helper library from https://www.twilio.com/docs/python/install
 # pip3 install twilio
 # $pip3 install apscheduler
+# run as cron job
 
-
+from project import get_config
 from twilio.rest import Client
 from project.appointments.apt_creator import make_reminder_list
 
 
 def twilio_contact():
     additional_text = 'This message is automated, please do not reply. Visit https://www.example.com or call xxx-xxx-xxxx. Thanks and see you then!'
-    with open('/home/ec2-user/website/twilio.txt', 'r') as fh:
-        details = fh.read().split()
-    account_sid = details[0]
-    auth_token = details[1]
-    from_ = details[2]
+    config = get_config()
+    account_sid = config.get('account_sid')
+    auth_token = config.get('auth_token')
+    from_ = config.get('phone')
 
     client = Client(account_sid, auth_token)
     for person, appt in make_reminder_list():
@@ -27,3 +27,7 @@ def twilio_contact():
                      to=to
                  )
             print(message.status)
+
+
+if __name__ == '__main__':
+    twilio_contact()

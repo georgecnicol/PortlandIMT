@@ -9,26 +9,18 @@ from flask_login import login_user, logout_user, login_required, current_user
 from project.users.forms import RegisterForm, LoginForm
 from flask_dance.contrib.google import make_google_blueprint, google
 from project.models import User
-from project import db
+from project import db, get_config
 
 
 core = Blueprint('core', __name__, template_folder = 'templates/core')
-
-with open('/home/ec2-user/website/google_secret.txt') as fh:
-    details = fh.read().split()
-
-with open('/home/ec2-user/website/reg_token.txt') as fh:
-    reg_token = fh.read().strip()
-
-client_id = details[0]
-client_secret = details[1]
+config = get_config() # used in g_blueprint and register view
 
 # registered in project.__init__
 g_blueprint = make_google_blueprint(
-    client_id=client_id,
-    client_secret=client_secret,
+    client_id=config.get('client_id'),
+    client_secret=config.get('client_secret'),
     # reprompt_consent=True,
-    offline=False, # TODO - change to False for production
+    offline=False,
     scope=["profile", "email"]
 )
 
@@ -114,7 +106,7 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        if form.token.data == reg_token.strip():
+        if form.token.data == config.get('reg_token').strip():
             if form.check_email_unique(form.email.data):
                 phone = form.area.data + form.exchange.data + form.subscriber.data
                 new_user = User(form.email.data.lower(), form.first.data.capitalize(),
