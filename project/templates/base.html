@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!-- favicon here -->
-    <link rel="icon"  href="../static/favicon.ico">
+    <link rel="icon"  href="{{ url_for('static', filename ='favicon.ico') }}">
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -15,7 +15,7 @@
     <!-- error message font-->
     <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
 
-    <link href="../static/fonts.css" rel="stylesheet">
+    <link href="{{url_for('static', filename = 'fonts.css' ) }}" rel="stylesheet">
 
     <title>Portland IMT</title>
 </head>
@@ -25,7 +25,7 @@
     <!-- always visible -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #f3c4cf;">
       <a class="navbar-brand" href="{{ url_for('core.index') }}">
-        <img src="../static/logo-512x512.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+        <img src="{{url_for('static', filename = 'logo-512x512.png') }}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
     Portland IMT
       </a>
       <!-- bootstrap collapse mechanic -->
