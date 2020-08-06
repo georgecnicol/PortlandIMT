@@ -9,19 +9,14 @@ Uses Bootstrap, flask
 
 # TODO - PRODUCTION
 # --------------------------------------------------------------------------
-# core/views
-# TODO change the the URL in the OAuth authorized URI from localhost to deployment URL
-# TODO currently it says: http://127.0.0.1:5000/login/google/authorized
-# TODO - change to False for production - (line 27ish) offline=True,
+# TODO - set up cron jobs for twillio, email notification, and ssl renewal
 
 
 # gmail_send
 # TODO -  message["To"] = receiver_email has to be changed in production: receiver_email -> person.email
-
-# __init___
-# # TODO - can be removed in production
-
+# leave this until testing completed
 
 
 # TODO in no particular order for improvements
 # --------------------------------------------------------------------------
+# create email password reset

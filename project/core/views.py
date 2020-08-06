@@ -1,9 +1,7 @@
 # core/views.py
 # https://console.developers.google.com/
 # https://pusher.com/tutorials/google-recaptcha-flask
-# TODO change the the URL in the OAuth authorized URI from localhost to deployment URL
-# TODO currently it says: http://127.0.0.1:5000/login/google/authorized
-
+import os
 from flask import render_template, redirect, Blueprint, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from project.users.forms import RegisterForm, LoginForm
@@ -11,7 +9,17 @@ from flask_dance.contrib.google import make_google_blueprint, google
 from project.models import User
 from project import db, get_config
 
+# routes here:
+#
+# @core.route('/google') .. oauth_login
+# @core.route('/') .. index
+# @core.route('/about')
+# @core.route('/login', methods = ['GET', 'POST'])
+# @core.route('/register', methods = ['GET', 'POST'])
+# @core.route('/logout')
 
+
+os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 core = Blueprint('core', __name__, template_folder = 'templates/core')
 config = get_config() # used in g_blueprint and register view
 
@@ -20,8 +28,8 @@ g_blueprint = make_google_blueprint(
     client_id=config.get('client_id'),
     client_secret=config.get('client_secret'),
     # reprompt_consent=True,
-    offline=False,
-    scope=["profile", "email"]
+    #coffline=True,
+    scope=["https://www.googleapis.com/auth/userinfo.email"]
 )
 
 # a website user who attempts to login using google
@@ -59,7 +67,7 @@ def match_gmail():
 
 # log in with google
 # this page wants to end up because of flask dance as:
-# https://....:5000/login/google
+# https://xxxxxx.com/login/google
 # since there is already a blueprint directing it to /login
 # the route.('/login/google') take it to /login/login/google
 @core.route('/google')
@@ -75,6 +83,7 @@ def oauth_login():
 
 
 @core.route('/')
+@core.route('/index')
 def index():
     match_gmail()
     return render_template('index.html')
