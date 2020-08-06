@@ -1,10 +1,15 @@
-Work in progress, but currently:
+A scheduling app for clients and admin. The admin creates appointments
+and the clients can book those appointments. The clients will optionally
+receive email and/ or text reminders via opt-in menu selector. Admin can
+also mark appointments as paid/ unpaid for some tracking of billing. Admin
+and/ or clients can login via oauth. New clients can register provided they
+have the token given separately.
+
 Admin can CRUD appointments.
 Users can CRU themselves.
-Users can schedule appointments and manage their accounts with OAuth login.
-Automated email/ text reminders of appointments.
-Basic company information
-Uses Bootstrap, flask
+
+Sqlite, Flask, gunicorn, nginx, supervisor, python, bootstrap, css, html
+running on ubuntu 18 on AWS with https.
 
 
 # TODO - PRODUCTION
