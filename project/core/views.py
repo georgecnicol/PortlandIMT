@@ -3,11 +3,12 @@
 # https://pusher.com/tutorials/google-recaptcha-flask
 import os
 from flask import render_template, redirect, Blueprint, url_for, flash
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required
 from project.users.forms import RegisterForm, LoginForm
 from flask_dance.contrib.google import make_google_blueprint, google
 from project.models import User
 from project import db, get_config
+from oauthlib.oauth2.rfc6749.errors import TokenExpiredError, InvalidClientError
 
 # routes here:
 #
@@ -28,7 +29,7 @@ g_blueprint = make_google_blueprint(
     client_id=config.get('client_id'),
     client_secret=config.get('client_secret'),
     # reprompt_consent=True,
-    #coffline=True,
+    offline=True,
     scope=["https://www.googleapis.com/auth/userinfo.email"]
 )
 
@@ -47,6 +48,11 @@ def de_auth_google():
             del g_blueprint.token
     except TypeError:
         pass # no token for manual login people
+    except TokenExpiredError: # caused by lack of offline=True in config, may exist for some still
+        del g_blueprint.token
+    except InvalidClientError: # caused by lack of offline=True in config, may exist for some still
+        del g_blueprint.token
+
 
 # trying to match their google auth gmail to a registered user's email
 # if we can, we log them in. Otherwise we need to get rid of their token
