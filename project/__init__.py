@@ -54,9 +54,7 @@ def create_app():
     app.register_blueprint(users, url_prefix = '/users')
 
     # OATH SETUP #############
-    # for local only #########
-    #
+    # for local only
     # os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = '1'
-    # os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = '1'
 
     return app

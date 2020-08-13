@@ -3,12 +3,27 @@
     <div class = 'jumbotron'>
     <h2>Users</h2>
     {% for user in users %}
-    {{ user }} <br>
+    {{ user.first }} {{ user.last }}:
+    {{ user.email }}<strong>
+    {% if user.email_me == 1 %}
+    will
+    {% else %}
+    will not
+    {% endif %}</strong>
+    receive email.
+    ({{ user.phone[0:3] }}) {{ user.phone[3:6] }} - {{ user.phone[6:] }}<strong>
+    {% if user.text_me == 1 %}
+    will
+    {% else %}
+    will not
+    {% endif %}</strong>
+    receive texts.<br>
+
     {% endfor %}
             <hr class = 'my-4'>
     <h2>Admins</h2>
     {% for admin in admins %}
-    {{ admin }} <br>
+    {{ admin }} {% if admin.email_me %} send email {% endif %} {% if admin.text_me %} text me {% endif %}<br>
     {% endfor %}
     </div>
 
