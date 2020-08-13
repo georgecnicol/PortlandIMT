@@ -12,16 +12,6 @@ Sqlite, Flask, gunicorn, nginx, supervisor, python, bootstrap, css, html
 running on ubuntu 18 on AWS with https.
 
 
-# TODO - PRODUCTION
-# --------------------------------------------------------------------------
-# TODO - set up cron jobs for twillio, email notification, and ssl renewal
-
-
-# gmail_send
-# TODO -  message["To"] = receiver_email has to be changed in production: receiver_email -> person.email
-# leave this until testing completed
-
-
 # TODO in no particular order for improvements
 # --------------------------------------------------------------------------
 # create email password reset
