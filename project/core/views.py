@@ -153,5 +153,10 @@ def logout():
     return redirect(url_for('core.index'))
 
 
+@core.route('/robots.txt')
+def robots():
+    return render_template('robots.txt')
+
+
 
 
