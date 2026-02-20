@@ -45,5 +45,5 @@ twilio==6.43.0
 tzlocal==2.1
 urllib3==1.25.9
 URLObject==2.4.3
-Werkzeug==1.0.1
+Werkzeug==3.1.6
 WTForms==2.3.1
